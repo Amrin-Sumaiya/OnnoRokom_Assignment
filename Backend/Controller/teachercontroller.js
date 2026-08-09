@@ -36,3 +36,20 @@ export const createTeacher = async (req, res) => {
         });
     }
 };
+
+//get all teachers data
+
+export const getAllTeachers = async(req, res) => {
+
+    try {
+        const teachersData = await Teacher.find();
+        if(!teachersData || teachersData.length === 0){
+            return res.status(404).json({ message: "No teachers found" });
+        }
+        res.status(200).json(teachersData);
+
+    } catch (error){
+        res.status(500).json({ errorMessage: error.message });
+
+    }
+}
