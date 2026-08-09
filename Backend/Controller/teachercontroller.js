@@ -53,3 +53,89 @@ export const getAllTeachers = async(req, res) => {
 
     }
 }
+
+//get user by specific id
+export const getTeacherById = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const teacherData = await Teacher.findById(id);
+
+        if (!teacherData) {
+            return res.status(404).json({
+                message: "Teacher not found"
+            });
+        }
+
+        res.status(200).json(teacherData);
+
+    } catch (error) {
+        console.error("Get teacher by ID error:", error);
+
+        res.status(500).json({
+            errorMessage: error.message
+        });
+    }
+};
+
+// Update teacher
+export const updateTeacher = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const { name, email, subject, classes } = req.body;
+
+        const teacherData = await Teacher.findById(id);
+
+        if (!teacherData) {
+            return res.status(404).json({
+                message: "Teacher not found"
+            });
+        }
+
+        teacherData.name = name;
+        teacherData.email = email;
+        teacherData.subject = subject;
+        teacherData.classes = classes;
+
+        const updatedTeacher = await teacherData.save();
+
+        res.status(200).json(updatedTeacher);
+
+    } catch (error) {
+        console.error("Update teacher error:", error);
+
+        res.status(500).json({
+            errorMessage: error.message
+        });
+    }
+};
+
+
+// Delete teacher
+export const deleteTeacher = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const teacherData = await Teacher.findById(id);
+
+        if (!teacherData) {
+            return res.status(404).json({
+                message: "Teacher not found"
+            });
+        }
+
+        await Teacher.findByIdAndDelete(id);
+
+        res.status(200).json({
+            message: "Teacher deleted successfully"
+        });
+
+    } catch (error) {
+        console.error("Delete teacher error:", error);
+
+        res.status(500).json({
+            errorMessage: error.message
+        });
+    }
+};
