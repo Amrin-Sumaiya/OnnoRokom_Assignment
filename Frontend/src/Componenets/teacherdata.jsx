@@ -181,9 +181,9 @@ const TeacherData = () => {
                   <td className="border p-4">
 
                     <button
-                      onClick={() =>
-                        navigate(`/update-teacher/${teacher._id}`)
-                      }
+onClick={() =>
+  navigate(`/update_teacher/${teacher._id}`)
+}
                       className="text-blue-600 hover:scale-110 transition"
                     >
                       <FaEdit />
